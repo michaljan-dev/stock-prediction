@@ -1,0 +1,13 @@
+[Unit]
+Description=Celery Worker Service
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/var/www/html/stock-prediction
+ExecStart=/bin/bash -c 'poetry run celery worker -A cron.celery'
+ExecStop=/bin/bash -c 'poetry run celery worker -A cron.celery multi stop worker'
+
+[Install]
+WantedBy=multi-user.target

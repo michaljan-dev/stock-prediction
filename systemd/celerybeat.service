@@ -1,0 +1,13 @@
+[Unit]
+Description=Celery Beat Service
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+Environment="PATH=/home/ubuntu/.local/bin:$PATH"
+WorkingDirectory=/var/www/html/stock-prediction
+ExecStart=/bin/bash -c 'poetry run celery beat -A cron.celery'
+ExecStop=/bin/bash -c 'poetry run celery multi stop beat'
+[Install]
+WantedBy=multi-user.target

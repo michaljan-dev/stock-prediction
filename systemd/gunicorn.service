@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve python
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/var/www/html/stock-prediction
+Environment="PATH=/home/ubuntu/.local/bin:$PATH"
+ExecStart=/bin/bash -c 'poetry run gunicorn --workers 1 --bind unix:ai-flask.sock -m 007 wsgi:app'
+
+[Install]
+WantedBy=multi-user.target
